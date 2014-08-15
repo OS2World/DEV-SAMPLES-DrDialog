@@ -1,0 +1,168 @@
+(*อออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+บ                                                                              บ
+บ  DrDialog Definitions                                                        บ
+บ                                                                              บ
+บ  Date: 06/15/93                                                              บ
+บ                                                                              บ
+บ  Written by: David C. Morrill                                                บ
+บ                                                                              บ
+บ  (c) Copyright IBM Corporation 1993                                          บ
+บ                                                                              บ
+ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออ*)
+
+DEFINITION DRDIALOG;
+
+CONST
+
+(*อออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+บ                                                                              บ
+บ  Common 'style' bits for Turtle and Billboard controls:                      บ
+บ                                                                              บ
+ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออ*)
+
+   CTL_CONTAINER* = 8000H;       (* Control is a container *)
+
+(*อออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+บ                                                                              บ
+บ  CANVAS 'style' bits:                                                        บ
+บ                                                                              บ
+ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออ*)
+
+   CNV_BITMAP*    = 000FH;      (* Bitmap selector mask *)
+   CNV_SIZE*      = 00F0H;      (* Frame thickness mask *)
+   CNV_LEFT*      = 0100H;      (* Text is left aligned *)
+   CNV_RIGHT*     = 0200H;      (* Text is right aligned *)
+   CNV_TOP*       = 0400H;      (* Text is top aligned *)
+   CNV_BOTTOM*    = 0800H;      (* Text is bottom aligned *)
+   CNV_SEPARATOR* = 1000H;      (* Text should have a separator *)
+   CNV_RAISED*    = 2000H;      (* Raised style frame *)
+   CNV_RIDGED*    = 4000H;      (* Ridged style frame *)
+
+(*อออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+บ                                                                              บ
+บ  PAINT 'style' bits:                                                         บ
+บ                                                                              บ
+ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออ*)
+
+   PNT_FOREGND*   = 000FH;      (* Foreground color mask *)
+   PNT_BACKGND*   = 00F0H;      (* Background color mask *)
+   PNT_PATTERN*   = 0F00H;      (* Pattern mask *)
+
+(*อออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+บ                                                                              บ
+บ  MARQUEE Style Bits:                                                         บ
+บ                                                                              บ
+ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออ*)
+
+   MRQ_BOLD*      = 00001H;     (* Use Bold font *)
+   MRQ_ITALIC*    = 00002H;     (* Use Italic font *)
+   MRQ_FONT*      = 0000CH;     (* Font family select mask: *)
+   MRQ_HELV*      = 00000H;     (* - Helvetica *)
+   MRQ_TIMES*     = 00004H;     (* - Times New Roman *)
+   MRQ_COURIER*   = 00008H;     (* - Courier *)
+   MRQ_SYMBOL*    = 0000CH;     (* - Symbol *)
+   MRQ_L2R*       = 00010H;     (* Direction is left to right *)
+   MRQ_EMBOSSED*  = 00020H;     (* Embossed appearance *)
+   MRQ_SPEED*     = 000C0H;     (* Speed mask: *)
+   MRQ_STOPPED*   = 00000H;     (* - Stopped *)
+   MRQ_SLOW*      = 00040H;     (* - Slow *)
+   MRQ_MEDIUM*    = 00080H;     (* - Medium *)
+   MRQ_FAST*      = 000C0H;     (* - Fast *)
+   MRQ_FOREGND*   = 00F00H;     (* Foreground color mask *)
+   MRQ_BACKGND*   = 0F000H;     (* Background color mask *)
+
+(*อออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+บ                                                                              บ
+บ  BILLBOARD Style Bits:                                                       บ
+บ                                                                              บ
+ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออ*)
+
+   BRD_MODE*      = 00003H;     (* Mode flags: *)
+   BRD_CENTER*    = 00000H;     (* - Center *)
+   BRD_SCALE*     = 00001H;     (* - Scale to fit *)
+   BRD_REPLICATE* = 00002H;     (* - Replicate *)
+   BRD_DIR*       = 0000CH;     (* Direction mask: *)
+   BRD_LEFT*      = 00000H;     (* - right to left *)
+   BRD_RIGHT*     = 00004H;     (* - left to right *)
+   BRD_TOP*       = 00008H;     (* - bottom to top *)
+   BRD_BOTTOM*    = 0000CH;     (* - top to bottom *)
+   BRD_SPEED*     = 00030H;     (* Speed mask: *)
+   BRD_STOPPED*   = 00000H;     (* - Stopped *)
+   BRD_SLOW*      = 00010H;     (* - Slow *)
+   BRD_MEDIUM*    = 00020H;     (* - Medium *)
+   BRD_FAST*      = 00030H;     (* - Fast *)
+   BRD_BUTTON*    = 00080H;     (* Button *)
+
+(*อออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+บ                                                                              บ
+บ  TURTLE Style Bits:                                                          บ
+บ                                                                              บ
+ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออ*)
+
+   TUR_BUTTON*    = 0001H;      (* Is a button *)
+
+(*อออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+บ                                                                              บ
+บ  Turtle WM_CONTROL notification codes:                                       บ
+บ                                                                              บ
+ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออ*)
+
+   TUR_MOUSEMOVE*     = WM_USER + WM_MOUSEMOVE;
+   TUR_BUTTON1DOWN*   = WM_USER + WM_BUTTON1DOWN;
+   TUR_BUTTON1UP*     = WM_USER + WM_BUTTON1UP;
+   TUR_BUTTON1DBLCLK* = WM_USER + WM_BUTTON1DBLCLK;
+   TUR_BUTTON2DOWN*   = WM_USER + WM_BUTTON2DOWN;
+   TUR_BUTTON2UP*     = WM_USER + WM_BUTTON2UP;
+   TUR_BUTTON2DBLCLK* = WM_USER + WM_BUTTON2DBLCLK;
+   TUR_BUTTON3DOWN*   = WM_USER + WM_BUTTON3DOWN;
+   TUR_BUTTON3UP*     = WM_USER + WM_BUTTON3UP;
+   TUR_BUTTON3DBLCLK* = WM_USER + WM_BUTTON3DBLCLK;
+
+(*อออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+บ                                                                              บ
+บ  Bag Button Style Bits:                                                      บ
+บ                                                                              บ
+ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออ*)
+
+   BAG_TYPE*      = 0003H;      (* Button type mask: *)
+   BAG_BUTTON*    = 0000H;      (* - Pushbutton *)
+   BAG_CLICKER*   = 0001H;      (* - Clicker *)
+   BAG_CHECKBOX*  = 0002H;      (* - Check box *)
+   BAG_RADIO*     = 0003H;      (* - Radio button *)
+   BAG_RATE*      = 000CH;      (* Clicker rate mask: *)
+   BAG_SLOW*      = 0000H;      (* - Slow *)
+   BAG_MEDIUM*    = 0004H;      (* - Medium *)
+   BAG_FAST*      = 0008H;      (* - Fast *)
+   BAG_FASTEST*   = 000CH;      (* - Fastest *)
+   BAG_LEFT*      = 0010H;      (* Text is left aligned *)
+   BAG_RIGHT*     = 0020H;      (* Text is right aligned *)
+   BAG_TOP*       = 0040H;      (* Text is top aligned *)
+   BAG_BOTTOM*    = 0080H;      (* Text is bottom aligned *)
+   BAG_SIZE*      = 0300H;      (* Frame thickness mask *)
+   BAG_SHIFT*     = 0C00H;      (* 'Bagged' window shift mask *)
+   BAG_LED*       = 1000H;      (* LED should be drawn *)
+   BAG_LEDROUND*  = 2000H;      (* LED should be round (not rectangular) *)
+   BAG_LEDCOLOR*  = 0C000H;     (* LED color mask: *)
+   BAG_LEDRED*    = 0000H;      (* - Red *)
+   BAG_LEDGREEN*  = 4000H;      (* - Green *)
+   BAG_LEDYELLOW* = 8000H;      (* - Yellow *)
+   BAG_LEDCYAN*   = 0C000H;     (* - Cyan *)
+
+(*อออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+บ                                                                              บ
+บ  ICONBUTTON Style Bits:                                                      บ
+บ                                                                              บ
+ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออ*)
+
+   ICN_BUTTON2*   = 0001H;      (* Allow button click with button 2 *)
+
+(*อออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+บ                                                                              บ
+บ  DrDialog Initialization Routine:                                            บ
+บ                                                                              บ
+ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออ*)
+
+PROCEDURE UseDrDialog* ( ): LONGINT;
+
+END DRDIALOG.
+
